@@ -118,6 +118,6 @@ class Cube:
       self.corner_arr = [self.corner_arr[2], self.corner_arr[0], self.corner_arr[3], self.corner_arr[1]] + self.corner_arr[4:]
       self.edge_arr = [self.edge_arr[1], self.edge_arr[3], self.edge_arr[0], self.edge_arr[2]] + self.edge_arr[4:]
 
-c1 = Cube()
-#c1.clockwise_top()
-#c1.display()
+   def clockwise_bom(self):
+      self.corner_arr = self.corner_arr[:4] + [self.corner_arr[6], self.corner_arr[4], self.corner_arr[7], self.corner_arr[5]]
+      self.edge_arr = self.edge_arr[:4] + [self.edge_arr[5], self.edge_arr[7], self.edge_arr[4], self.edge_arr[6]] + self.edge_arr[8:]
