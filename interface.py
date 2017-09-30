@@ -27,7 +27,7 @@ corner_set = [Corner('u', 'l', 'b'),
               Corner('d', 'b', 'l'),
               Corner('d', 'r', 'b')]
 
-edge_set = [Edge('u', 'b'),
+edge_set = [Edge('u', 'b'),#
             Edge('u', 'l'),
             Edge('u', 'r'),
             Edge('u', 'f'),
@@ -35,37 +35,13 @@ edge_set = [Edge('u', 'b'),
             Edge('d', 'f'),  
             Edge('d', 'l'),  
             Edge('d', 'r'),  
-            Edge('d', 'b'), 
+            Edge('d', 'b'),# 
 
             Edge('f', 'l'),
             Edge('r', 'f'),
-            Edge('l', 'b'),
-            Edge('b', 'r')]
+            Edge('l', 'b'),#
+            Edge('b', 'r')]#
 
-soln_cset = [Corner('u', 'l', 'b'),
-              Corner('u', 'b', 'r'),
-              Corner('u', 'f', 'l'),
-              Corner('u', 'r', 'f'),
-
-              Corner('d', 'l', 'f'),
-              Corner('d', 'f', 'r'),
-              Corner('d', 'b', 'l'),
-              Corner('d', 'r', 'b')]
-
-soln_eset = [Edge('u', 'b'),
-              Edge('u', 'l'),
-              Edge('u', 'r'),
-              Edge('u', 'f'),
-            
-              Edge('d', 'f'),  
-              Edge('d', 'l'),  
-              Edge('d', 'r'),  
-              Edge('d', 'b'), 
-
-              Edge('f', 'l'),
-              Edge('r', 'f'),
-              Edge('l', 'b'),
-              Edge('b', 'r')]
 
 class Cube:
    def __init__(self, corner_arr = corner_set, edge_arr = edge_set):
@@ -139,8 +115,28 @@ class Cube:
       print()
 
    def is_solved(self):
+      soln_cset = [Corner('u', 'l', 'b'),
+                   Corner('u', 'b', 'r'),
+                   Corner('u', 'f', 'l'),
+                   Corner('u', 'r', 'f'),
+                   Corner('d', 'l', 'f'),
+                   Corner('d', 'f', 'r'),
+                   Corner('d', 'b', 'l'),
+                   Corner('d', 'r', 'b')]
+      soln_eset = [Edge('u', 'b'),
+                   Edge('u', 'l'),
+                   Edge('u', 'r'),
+                   Edge('u', 'f'),
+                   Edge('d', 'f'),  
+                   Edge('d', 'l'),  
+                   Edge('d', 'r'),  
+                   Edge('d', 'b'), 
+                   Edge('f', 'l'),
+                   Edge('r', 'f'),
+                   Edge('l', 'b'),
+                   Edge('b', 'r')] 
       return self == Cube(soln_cset, soln_eset)
-   
+
    def U(self):
       self.corner_arr[:4] = [self.corner_arr[2], self.corner_arr[0], self.corner_arr[3], self.corner_arr[1]]
       self.edge_arr[:4] = [self.edge_arr[1], self.edge_arr[3], self.edge_arr[0], self.edge_arr[2]]
@@ -156,3 +152,16 @@ class Cube:
       [e0, e1, e2, e3] = self.edge_arr[3:5] + self.edge_arr[8:10]
       self.edge_arr[3:5] = [Edge(e2.color2, e2.color1), e3]
       self.edge_arr[8:10] = [Edge(e1.color2, e1.color1), Edge(e0.color1, e0.color2)]
+
+   def B(self):
+      [c0, c1, c2, c3] = self.corner_arr[:2] + self.corner_arr[6:]
+      self.corner_arr[0] = Corner(c1.up_color, c1.facing_color, c1.left_color)
+      self.corner_arr[1] = Corner(c3.left_color, c3.up_color, c3.facing_color)
+      self.corner_arr[6] = Corner(c0.left_color, c0.up_color, c0.facing_color)
+      self.corner_arr[7] = Corner(c2.up_color, c2.facing_color, c2.left_color)
+
+      [e0, e1, e2, e3] = [self.edge_arr[0], self.edge_arr[7]] + self.edge_arr[10:]
+      self.edge_arr[0] = Edge(e3.color2, e3.color1)
+      self.edge_arr[7] = e2
+      self.edge_arr[10] = e0 #Edge(e0.color2, e0.color1)
+      self.edge_arr[11] = Edge(e1.color2, e1.color1)
